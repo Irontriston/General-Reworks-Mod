@@ -1,0 +1,155 @@
+EmitterBlueprint {
+	BlueprintId = 'aeon_laser_fxtrail_02',
+	Lifetime = -1,
+	Repeattime = 50,
+	TextureFramecount = 1,
+	Blendmode = 3,
+	LocalVelocity = true,
+	LocalAcceleration = true,
+	Gravity = false,
+	AlignRotation = true,
+	AlignToBone = false,
+	Flat = false,
+	LODCutoff = 150,
+	EmitIfVisible = true,
+	CatchupEmit = true,
+	CreateIfVisible = false,
+	SnapToWaterline = false,
+	OnlyEmitOnWater = false,
+	ParticleResistance = false,
+	InterpolateEmission = true,
+	TextureStripcount = 1,
+	SortOrder = 0,
+	LowFidelity = true,
+	MedFidelity = true,
+	HighFidelity = true,
+	Texture = '/textures/particles/quantum_generator_add_02.dds',
+	RampTexture = '/textures/particles/ramp_white_01.dds',
+	XDirectionCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	YDirectionCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	ZDirectionCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0.8,z=0.2 },
+		},
+	},
+	EmitRateCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=20,z=0 },
+		},
+	},
+	LifetimeCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=2,z=1 },
+		},
+	},
+	VelocityCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=1,z=0 },
+		},
+	},
+	XAccelCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	YAccelCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	ZAccelCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=-0.02,z=0 },
+		},
+	},
+	ResistanceCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	SizeCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	XPosCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0.025 },
+		},
+	},
+	YPosCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25, y=0,z=0.025 },
+		},
+	},
+	ZPosCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	StartSizeCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0.125,z=0 },
+		},
+	},
+	EndSizeCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	InitialRotationCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	RotationRateCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	FrameRateCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=1,z=0 },
+		},
+	},
+	TextureSelectionCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	RampSelectionCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+}
+

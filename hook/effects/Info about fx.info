@@ -1,0 +1,5 @@
+Because shaders are compiled at the beginning of SupCom's launch, so mods can't truly affect them.
+
+If you want to integrate this mod's fx files into the game, you should keep a back up of the original effects.scd so that if need be, you can switch back to it without hassle.
+
+To actually integrate this mod's fx files into SupCom, you'd need to manually rename effects.scd to effects.zip, into which you can inject or copy the fx files here into, and then renaming it to the original extension.

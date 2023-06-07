@@ -1,0 +1,155 @@
+EmitterBlueprint {
+	BlueprintId = 'ionized_plasma_gatling_cannon_laser_fxtrail_01',
+	Lifetime = -5,
+	Repeattime = 5,
+	TextureFramecount = 1,
+	Blendmode = 3,
+	LocalVelocity = true,
+	LocalAcceleration = true,
+	Gravity = false,
+	AlignRotation = true,
+	AlignToBone = true,
+	Flat = false,
+	LODCutoff = 100,
+	EmitIfVisible = true,
+	CatchupEmit = true,
+	CreateIfVisible = false,
+	SnapToWaterline = false,
+	OnlyEmitOnWater = false,
+	ParticleResistance = false,
+	InterpolateEmission = true,
+	TextureStripcount = 1,
+	SortOrder = 0,
+	LowFidelity = true,
+	MedFidelity = true,
+	HighFidelity = true,
+	Texture = [[/textures/particles/line_white_premod_01.dds]],
+	RampTexture = [[/textures/particles/ramp_color_build_spray.dds]],
+	XDirectionCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	YDirectionCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	ZDirectionCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	EmitRateCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=25,z=1 },
+		},
+	},
+	LifetimeCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0.8,z=1 },
+		},
+	},
+	VelocityCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=1,z=0 },
+		},
+	},
+	XAccelCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	YAccelCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	ZAccelCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	ResistanceCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	SizeCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	XPosCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	YPosCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	ZPosCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	StartSizeCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0.800,z=0 },
+		},
+	},
+	EndSizeCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	InitialRotationCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=1.069,y=0,z=0 },
+		},
+	},
+	RotationRateCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	FrameRateCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=1,z=0 },
+		},
+	},
+	TextureSelectionCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+	RampSelectionCurve = {
+		XRange = 5,
+		Keys = {
+			{ x=2,y=0,z=0 },
+		},
+	},
+}
+

@@ -1,0 +1,159 @@
+-- used by nukes
+EmitterBlueprint {
+	BlueprintId = 'shockwave_smoke_01',
+	Lifetime = 40,
+	Repeattime = 40,
+	TextureFramecount = 1,
+	Blendmode = 0,
+	LocalVelocity = true,
+	LocalAcceleration = false,
+	Gravity = false,
+	AlignRotation = false,
+	AlignToBone = false,
+	Flat = false,
+	LODCutoff = -1, -- t3 / t4 artillery
+	EmitIfVisible = false,
+	CatchupEmit = true,
+	CreateIfVisible = false,
+	SnapToWaterline = true,
+	OnlyEmitOnWater = false,
+	ParticleResistance = false,
+	InterpolateEmission = true,
+	TextureStripcount = 4,
+	SortOrder = 0,
+	LowFidelity = true,
+	MedFidelity = true,
+	HighFidelity = true,
+	Texture = '/textures/particles/cloud_smoke_alpha_05.dds',
+	RampTexture = '/textures/particles/ramp_white_12.dds',
+	XDirectionCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	YDirectionCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	ZDirectionCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	EmitRateCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=5,z=0 },
+		},
+	},
+	LifetimeCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=125,z=35 },
+		},
+	},
+	VelocityCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=10,z=0 },
+		},
+	},
+	XAccelCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	YAccelCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	ZAccelCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	ResistanceCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	SizeCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	XPosCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=2.5,y=0,z=2 },
+			{ x=40,y=0,z=150 },
+		},
+	},
+	YPosCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=1 },
+		},
+	},
+	ZPosCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=1 },
+		},
+	},
+	StartSizeCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=2,z=1 },
+		},
+	},
+	EndSizeCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0.1,z=0 },
+		},
+	},
+	InitialRotationCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	RotationRateCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	FrameRateCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=0,z=0 },
+		},
+	},
+	TextureSelectionCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=20,y=2,z=4 },
+		},
+	},
+	RampSelectionCurve = {
+		XRange = 40,
+		Keys = {
+			{ x=6.8,y=0,z=0 },
+			{ x=10.25,y=0.69,z=0 },
+			{ x=40,y=1,z=0 },
+		},
+	},
+}
+

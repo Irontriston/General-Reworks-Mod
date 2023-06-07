@@ -1,0 +1,155 @@
+EmitterBlueprint {
+	BlueprintId = 'nuke_mist_01',
+	Lifetime = 150,
+	Repeattime = 1,
+	TextureFramecount = 1,
+	Blendmode = 0,
+	LocalVelocity = true,
+	LocalAcceleration = false,
+	Gravity = false,
+	AlignRotation = false,
+	AlignToBone = false,
+	Flat = false,
+	LODCutoff = 150,
+	EmitIfVisible = false,
+	CatchupEmit = true,
+	CreateIfVisible = false,
+	SnapToWaterline = false,
+	OnlyEmitOnWater = false,
+	ParticleResistance = true,
+	InterpolateEmission = true,
+	TextureStripcount = 1,
+	SortOrder = -10,
+	LowFidelity = true,
+	MedFidelity = true,
+	HighFidelity = true,
+	Texture = '/textures/particles/cloud_smoke_alpha_08.dds',
+	RampTexture = '/textures/particles/ramp_grey_03.dds',
+	XDirectionCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0,y=0,z=2 },
+		},
+	},
+	YDirectionCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	ZDirectionCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0,y=0,z=2 },
+		},
+	},
+	EmitRateCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=5,z=0 },
+		},
+	},
+	LifetimeCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=130,z=20 },
+		},
+	},
+	VelocityCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0.35,z=0.25 },
+		},
+	},
+	XAccelCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.375,y=0,z=0 },
+		},
+	},
+	YAccelCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.3,y=0,z=0 },
+		},
+	},
+	ZAccelCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	ResistanceCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0.02,z=0.02 },
+		},
+	},
+	SizeCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=1,z=0 },
+		},
+	},
+	XPosCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0,y=0,z=3 },
+		},
+	},
+	YPosCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0.625,z=0.625 },
+		},
+	},
+	ZPosCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0,y=0,z=3 },
+		},
+	},
+	StartSizeCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=2,z=0 },
+		},
+	},
+	EndSizeCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=20,z=10 },
+		},
+	},
+	InitialRotationCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=180,z=360 },
+		},
+	},
+	RotationRateCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	FrameRateCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=1,z=0 },
+		},
+	},
+	TextureSelectionCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	RampSelectionCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0.5,z=1 },
+		},
+	},
+}
+

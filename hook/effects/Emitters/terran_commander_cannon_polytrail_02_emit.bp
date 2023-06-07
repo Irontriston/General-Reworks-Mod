@@ -1,0 +1,13 @@
+TrailEmitterBlueprint {
+	BlueprintId = 'terran_commander_cannon_polytrail_02',
+	Lifetime = -1,
+    TrailLength = 0.13,
+    Size = 0.07,
+    SortOrder = 0,
+    BlendMode = 3,
+    TextureRepeatRate = 0.13,
+    LODCutoff = 160,
+	RampTexture = [[/textures/particles/beam_cyan_03.dds]],
+    RepeatTexture = '/textures/particles/ramp_trail_17.dds',
+}
+

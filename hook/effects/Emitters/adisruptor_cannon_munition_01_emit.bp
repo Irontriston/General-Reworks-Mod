@@ -1,0 +1,155 @@
+EmitterBlueprint {
+	BlueprintId = 'disruptor_cannon_munition_01',
+	Lifetime = -1,
+	Repeattime = 50,
+	TextureFramecount = 1,
+	Blendmode = 2,
+	LocalVelocity = false,
+	LocalAcceleration = false,
+	Gravity = false,
+	AlignRotation = false,
+	AlignToBone = false,
+	Flat = false,
+	LODCutoff = 100,
+	EmitIfVisible = true,
+	CatchupEmit = true,
+	CreateIfVisible = false,
+	SnapToWaterline = false,
+	OnlyEmitOnWater = false,
+	ParticleResistance = false,
+	InterpolateEmission = true,
+	TextureStripcount = 1,
+	SortOrder = 0,
+	LowFidelity = true,
+	MedFidelity = true,
+	HighFidelity = true,
+	Texture = [[/textures/particles/glow_01.dds]],
+	RampTexture = [[/textures/particles/ramp_electron_burst_cloud_01.dds]],
+	XDirectionCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	YDirectionCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	ZDirectionCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	EmitRateCurve = {
+		XRange = 10,
+		Keys = {
+			{ x=5,y=100,z=0 },
+		},
+	},
+	LifetimeCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0.2,z=0 },
+		},
+	},
+	VelocityCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0.1,z=0 },
+		},
+	},
+	XAccelCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	YAccelCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	ZAccelCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	ResistanceCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	SizeCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	XPosCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	YPosCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	ZPosCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	StartSizeCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0.1,z=0 },
+		},
+	},
+	EndSizeCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	InitialRotationCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=180,z=360 },
+		},
+	},
+	RotationRateCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=10 },
+		},
+	},
+	FrameRateCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=1,z=0 },
+		},
+	},
+	TextureSelectionCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+	RampSelectionCurve = {
+		XRange = 50,
+		Keys = {
+			{ x=25,y=0,z=0 },
+		},
+	},
+}
+

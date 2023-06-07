@@ -1,0 +1,154 @@
+-- used by TIFMissileNuke ueb2305
+EmitterBlueprint {
+	BlueprintId = 'nuke_concussion_ring_02',
+	Lifetime = 1,
+	Repeattime = 1,
+	TextureFramecount = 1,
+	Blendmode = 0,
+	LocalVelocity = true,
+	LocalAcceleration = false,
+	Gravity = false,
+	AlignRotation = false,
+	AlignToBone = false,
+	Flat = true,
+	LODCutoff = -1, -- nuke effect
+	EmitIfVisible = true,
+	CatchupEmit = true,
+	CreateIfVisible = false,
+	SnapToWaterline = true,
+	OnlyEmitOnWater = false,
+	ParticleResistance = false,
+	InterpolateEmission = true,
+	TextureStripcount = 1,
+	SortOrder = -99,
+	Texture = '/textures/particles/ring_white_02.dds',
+	RampTexture = '/textures/particles/ramp_white_09.dds',
+	XDirectionCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	YDirectionCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	ZDirectionCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	EmitRateCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0,y=1,z=0 },
+			{ x=0.01,y=0,z=0 },
+		},
+	},
+	LifetimeCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=150,z=0 },
+		},
+	},
+	VelocityCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=1,z=0 },
+		},
+	},
+	XAccelCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	YAccelCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	ZAccelCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	ResistanceCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	SizeCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	XPosCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	YPosCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=2,z=0 },
+		},
+	},
+	ZPosCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	StartSizeCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=5,z=0 },
+		},
+	},
+	EndSizeCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=160,z=0 },
+		},
+	},
+	InitialRotationCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=180,z=0 },
+		},
+	},
+	RotationRateCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	FrameRateCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=1,z=0 },
+		},
+	},
+	TextureSelectionCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+	RampSelectionCurve = {
+		XRange = 1,
+		Keys = {
+			{ x=0.5,y=0,z=0 },
+		},
+	},
+}
+

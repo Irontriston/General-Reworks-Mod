@@ -1,0 +1,152 @@
+EmitterBlueprint {
+	BlueprintId = 'riotgun_muzzle_sparks_01',
+	Lifetime = 2,
+	Repeattime = 2,
+	TextureFramecount = 1,
+	Blendmode = 3,
+	LocalVelocity = true,
+	LocalAcceleration = false,
+	Gravity = false,
+	AlignRotation = false,
+	AlignToBone = false,
+	Flat = false,
+	LODCutoff = 150,
+	EmitIfVisible = true,
+	CatchupEmit = true,
+	CreateIfVisible = false,
+	SnapToWaterline = false,
+	OnlyEmitOnWater = false,
+	ParticleResistance = false,
+	InterpolateEmission = true,
+	TextureStripcount = 1,
+	SortOrder = 0,
+	Texture = [[/textures/particles/riotgun_munition_04.dds]],
+	RampTexture = [[/textures/particles/ramp_fire_03.dds]],
+	XDirectionCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0,z=0.6 },
+		},
+	},
+	YDirectionCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=0.23,y=0,z=0.5 },
+		},
+	},
+	ZDirectionCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0.1,z=0.1 },
+		},
+	},
+	EmitRateCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=4,z=1 },
+		},
+	},
+	LifetimeCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=10,z=2 },
+		},
+	},
+	VelocityCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=0.966,y=0.5,z=0.2 },
+		},
+	},
+	XAccelCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0,z=0 },
+		},
+	},
+	YAccelCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y= -0.02,z=0 },
+		},
+	},
+	ZAccelCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0,z=0 },
+		},
+	},
+	ResistanceCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0,z=0 },
+		},
+	},
+	SizeCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=0.984,y=0,z=0 },
+		},
+	},
+	XPosCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0,z=0.5 },
+		},
+	},
+	YPosCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0,z=0 },
+		},
+	},
+	ZPosCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0,z=0 },
+		},
+	},
+	StartSizeCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0.1,z=0.01 },
+		},
+	},
+	EndSizeCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=13,y=0.09,z=0.01 },
+		},
+	},
+	InitialRotationCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=180,z=360 },
+		},
+	},
+	RotationRateCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0,z=90 },
+		},
+	},
+	FrameRateCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=0,z=0 },
+		},
+	},
+	TextureSelectionCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=1,y=8,z=16 },
+		},
+	},
+	RampSelectionCurve = {
+		XRange = 2,
+		Keys = {
+			{ x=0.85,y=1,z=2 },
+		},
+	},
+}
+
