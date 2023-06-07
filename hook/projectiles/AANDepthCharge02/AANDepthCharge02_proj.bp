@@ -1,0 +1,60 @@
+ProjectileBlueprint {
+    Audio = {
+        Impact = Sound {
+            Bank = 'Impacts',
+            Cue = 'Impact_Water_Splash_AEON',
+            LodCutoff = 'Weapon_LodCutoff',
+        },
+        ImpactWater = Sound {
+            Bank = 'Impacts',
+            Cue = 'Impact_Water_Splash_AEON',
+            LodCutoff = 'Weapon_LodCutoff',
+        },
+    },
+    Categories = {
+        'AEON',
+        'PROJECTILE',
+        'ANTINAVY',
+    },
+    Defense = {
+        Health = 1,
+    },
+    Display = {
+        Mesh = {
+            LODs = {
+                {
+                    AlbedoName = '/projectiles/AANDepthCharge01/AANDepthCharge01_albedo.dds',
+                    LODCutoff = 150,
+                    MeshName = '/projectiles/AANDepthCharge01/AANDepthCharge01_lod0.scm',
+                    ShaderName = 'TMeshGlow',
+                },
+            },
+        },
+        StrategicIconSize = 1,
+        UniformScale = 0.45,
+    },
+    DoNotCollideList = {
+        'TORPEDO',
+    },
+    General = {
+        Category = 'Anti Navy',
+        Faction = 'Aeon',
+        Weapon = 'Harmonic Depth Charge',
+    },
+    Interface = {
+        HelpText = 0,
+    },
+    Physics = {
+        Acceleration = 8,
+        DestroyOnWater = false,
+        MaxSpeed = 40,
+        StayUnderwater = true,
+        StayUpright = true,
+        TrackTarget = true,
+		SearchRadius = 14,
+		SearchCategories = 'ALLUNITS-HOVER',
+		SearchLayers = {'Water', 'Sub', 'Seabed'},
+        TurnRate = 720,
+        VelocityAlign = true,
+    },
+}
