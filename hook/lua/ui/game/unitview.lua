@@ -5,132 +5,6 @@
 --*
 --* Copyright © 2005 Gas Powered Games, Inc.  All rights reserved.
 --*****************************************************************************
-
-local UIUtil = import("/lua/ui/uiutil.lua")
-local DiskGetFileInfo = UIUtil.DiskGetFileInfo
-local LayoutHelpers = import("/lua/maui/layouthelpers.lua")
-local GameCommon = import("/lua/ui/game/gamecommon.lua")
-local Group = import("/lua/maui/group.lua").Group
-local Bitmap = import("/lua/maui/bitmap.lua").Bitmap
-local StatusBar = import("/lua/maui/statusbar.lua").StatusBar
-local veterancyDefaults = import("/lua/game.lua").VeteranDefault
-local Factions = import("/lua/factions.lua")
-local Prefs = import("/lua/user/prefs.lua")
-local EnhancementCommon = import("/lua/enhancementcommon.lua")
-local options = Prefs.GetFromCurrentProfile('options')
-local GetUnitRolloverInfo = import("/lua/keymap/selectedinfo.lua").GetUnitRolloverInfo
-local unitViewLayout = import(UIUtil.GetLayoutFilename('unitview'))
-local unitviewDetail = import("/lua/ui/game/unitviewdetail.lua")
-local Grid = import("/lua/maui/grid.lua").Grid
-local Construction = import("/lua/ui/game/construction.lua")
-local GameMain = import("/lua/ui/game/gamemain.lua")
-
-local selectedUnit = nil
-local updateThread = nil
-local unitHP = {}
-controls = import("/lua/ui/controls.lua").Get()
-
--- shared between sim and ui
-local OverchargeShared = import("/lua/shared/overcharge.lua")
-
-local UpdateWindowShowQueueOfUnit = (categories.SHOWQUEUE * categories.STRUCTURE) + categories.FACTORY
-
-function OverchargeCanKill()
-    if unitHP[1] and unitHP.blueprintId then
-        local selected = GetSelectedUnits()
-        local ACU
-        local ACUBp
-        local bp
-
-        for _, unit in selected do
-            if unit:GetBlueprint().CategoriesHash.COMMAND or
-                EntityCategoryContains(categories.SUBCOMMANDER * categories.SERAPHIM, unit) then
-                ACU = unit
-                break
-            end
-        end
-
-        if ACU then
-            ACUBp = ACU:GetBlueprint()
-
-            if ACUBp.Weapon[2].Overcharge then
-                bp = ACUBp.Weapon[2].Overcharge
-            elseif ACUBp.Weapon[3].Overcharge then -- cyb ACU
-                bp = ACUBp.Weapon[3].Overcharge
-                -- First weapon in cyb bp is "torpedo fix". Weapon[1] - torp, [2] - normal gun, [3] - OC. Other ACUs: [1] - normal, [2] - OC.
-            end
-
-            if bp then
-                local targetCategories = __blueprints[unitHP.blueprintId].CategoriesHash
-                local damage = OverchargeShared.EnergyAsDamage(GetEconomyTotals().stored.ENERGY)
-
-                if damage > bp.maxDamage then
-                    damage = bp.maxDamage
-                end
-
-                if targetCategories.COMMAND then
-                    if unitHP[1] < bp.commandDamage then
-                        unitHP[1] = nil
-                        return true
-                    else
-                        unitHP[1] = nil
-                        return false
-                    end
-                elseif targetCategories.STRUCTURE then
-                    if unitHP[1] < bp.structureDamage then
-                        unitHP[1] = nil
-                        return true
-                    else
-                        unitHP[1] = nil
-                        return false
-                    end
-                elseif unitHP[1] < damage then
-                    unitHP[1] = nil
-                    return true
-                else
-                    unitHP[1] = nil
-                    return false
-                end
-            end
-        end
-    end
-end
-
-function Contract()
-    controls.bg:SetNeedsFrameUpdate(false)
-    controls.bg:Hide()
-end
-
-function Expand()
-    controls.bg:SetNeedsFrameUpdate(true)
-    controls.bg:Show()
-end
-
-local queueTextures = {
-    Move = { texture = UIUtil.UIFile('/game/orders/move_btn_up.dds'), text = '<LOC order_0000>Moving' },
-    FormMove = { texture = UIUtil.UIFile('/game/orders/move_btn_up.dds'), text = '<LOC order_0000>Moving' },
-    BuildMobile = { texture = UIUtil.UIFile('/game/orders/move_btn_up.dds'), text = '<LOC order_0001>Building' },
-    Attack = { texture = UIUtil.UIFile('/game/orders/attack_btn_up.dds'), text = '<LOC order_0002>Attacking' },
-    AggressiveMove = { texture = UIUtil.UIFile('/game/orders/attack_btn_up.dds'), text = '<LOC order_0002>Attacking' },
-    Upgrade = { texture = UIUtil.UIFile('/game/orders/repair_btn_up.dds'), text = '<LOC order_0003>Upgrading' },
-    Guard = { texture = UIUtil.UIFile('/game/orders/guard_btn_up.dds'), text = '<LOC order_0011>' },
-    Repair = { texture = UIUtil.UIFile('/game/orders/repair_btn_up.dds'), text = '<LOC order_0005>Repairing' },
-    Reclaim = { texture = UIUtil.UIFile('/game/orders/reclaim_btn_up.dds'), text = '<LOC order_0006>Reclaiming' },
-    Capture = { texture = UIUtil.UIFile('/game/orders/convert_btn_up.dds'), text = '<LOC order_0007>Capturing' },
-    Ferry = { texture = UIUtil.UIFile('/game/orders/ferry_btn_up.dds'), text = '<LOC order_0016>Ferry' },
-    Patrol = { texture = UIUtil.UIFile('/game/orders/patrol_btn_up.dds'), text = '<LOC order_0017>Patrol' },
-    TransportReverseLoadUnits = { texture = UIUtil.UIFile('/game/orders/load_btn_up.dds'),
-        text = '<LOC order_0008>Loading' },
-    TransportUnloadUnits = { texture = UIUtil.UIFile('/game/orders/unload_btn_up.dds'),
-        text = '<LOC order_0009>Unloading' },
-    TransportLoadUnits = { texture = UIUtil.UIFile('/game/orders/load_btn_up.dds'), text = '<LOC order_0010>Loading' },
-    AssistCommander = { texture = UIUtil.UIFile('/game/orders/unload02_btn_up.dds'), text = '<LOC order_0011>Assisting' },
-    Sacrifice = { texture = UIUtil.UIFile('/game/orders/sacrifice_btn_up.dds'), text = '<LOC order_0012>Sacrificing' },
-    Nuke = { texture = UIUtil.UIFile('/game/orders/nuke_btn_up.dds'), text = '<LOC order_0013>Nuking' },
-    Tactical = { texture = UIUtil.UIFile('/game/orders/tactical_btn_up.dds'), text = '<LOC order_0014>Launching' },
-    OverCharge = { texture = UIUtil.UIFile('/game/orders/overcharge_btn_up.dds'), text = '<LOC order_0015>Overcharging' },
-}
-
 local function FormatTime(seconds)
     return string.format("%02d:%02d", math.floor(seconds / 60), math.floor(math.mod(seconds, 60)))
 end
@@ -237,13 +111,12 @@ local statFuncs = {
         if options.gui_detailed_unitview == 0 then
             return false
         end
-        if info.userUnit ~= nil and info.userUnit:GetBuildRate() > 1 then
+        if info.userUnit ~= nil and info.userUnit:GetBuildRate() > 0.00001 then
             return string.format("%.2f", info.userUnit:GetBuildRate())
         end
         return false
     end,
 }
-
 
 function CreateQueueGrid(parent)
     controls.queue = Bitmap(parent)
@@ -708,47 +581,6 @@ function UpdateWindow(info)
     UpdateEnhancementIcons(info)
 end
 
-local GetEnhancementPrefix = import("/lua/ui/game/construction.lua").GetEnhancementPrefix
-function UpdateEnhancementIcons(info)
-    local unit = info.userUnit
-    local existingEnhancements
-    if unit then
-        existingEnhancements = EnhancementCommon.GetEnhancements(unit:GetEntityId())
-    end
-
-    for slot, enhancement in controls.enhancements do
-        if unit == nil or
-            (not unit:IsInCategory('COMMAND') and not unit:IsInCategory('SUBCOMMANDER')) or
-            existingEnhancements == nil or existingEnhancements[slot] == nil then
-            enhancement:Hide()
-            continue
-        end
-
-        local bp = unit:GetBlueprint()
-        local bpId = bp.BlueprintId
-        local enhancementBp = bp.Enhancements[ existingEnhancements[slot] ]
-        local texture = GetEnhancementPrefix(bpId, enhancementBp.Icon) .. '_btn_up.dds'
-
-        enhancement:Show()
-        enhancement:SetTexture(UIUtil.UIFile(texture, true))
-        LayoutHelpers.SetDimensions(enhancement, 30, 30)
-    end
-end
-
-function ShowROBox()
-end
-
-function SetLayout(layout)
-    unitViewLayout.SetLayout()
-end
-
-function SetupUnitViewLayout(mapGroup, orderControl)
-    controls.parent = mapGroup
-    controls.orderPanel = orderControl
-    CreateUI()
-    SetLayout(UIUtil.currentLayout)
-end
-
 function CreateUI()
     controls.bg = Bitmap(controls.parent)
     controls.bracket = Bitmap(controls.bg)
@@ -831,13 +663,4 @@ function CreateUI()
     LayoutHelpers.AtLeftTopIn(controls.enhancements['Back'], controls.bg, 42, -30)
     LayoutHelpers.AtLeftTopIn(controls.enhancements['LCH'], controls.bg, 74, -30)
     CreateQueueGrid(controls.bg)
-end
-
-function OnSelection(units)
-    -- set if we have one unit selected, useful for state management for information to show
-    if units and table.getn(units) == 1 then
-        selectedUnit = units[1]
-    else
-        selectedUnit = nil
-    end
 end

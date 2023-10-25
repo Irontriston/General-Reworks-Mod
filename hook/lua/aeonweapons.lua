@@ -321,8 +321,8 @@ ADFTractorClaw = ClassWeapon(Weapon) {
                     CreateLightParticle(target, 0, self.Army, 4, 2, 'glow_02', 'ramp_blue_16')
 
                     local position = target:GetPosition()
-                    DamageArea(target, position, 3, 1, 'TreeFire', false, false)
-                    DamageArea(target, position, 2, 1, 'TreeForce', false, false)
+                    DamageArea({Unit = target, Proj = nil }, position, 3, 1, 'TreeFire', false, false)
+                    DamageArea({Unit = target, Proj = nil }, position, 2, 1, 'TreeForce', false, false)
                 end
 
                 projectile:Destroy()

@@ -1,37 +1,6 @@
-
--- Post process a unit
-local BlueprintNameToIntel = {
-    Cloak = 'Cloak',
-    CloakField = 'CloakField',
-    CloakFieldRadius = 'CloakField',
-    JammerBlips = 'Jammer',
-    OmniRadius = 'Omni',
-
-    RadarRadius = 'Radar',
-    RadarStealth = 'RadarStealth',
-    RadarStealthField = 'RadarStealthField',
-    RadarStealthFieldRadius = 'RadarStealthField',
-
-    Sonar = 'Sonar',
-    SonarRadius = 'Sonar',
-    SonarStealth = 'SonarStealth',
-    SonarStealthFieldRadius = 'SonarStealthField',
-}
-
-local LabelToVeterancyUse = {
-    ['DeathWeapon'] = true,
-    ['DeathImpact'] = true,
-}
-
-local TechToVetMultipliers = {
-    TECH1 = 2,
-    TECH2 = 1.5,
-    TECH3 = 1.25,
-    SUBCOMMANDER = 2,
-    EXPERIMENTAL = 2,
-    COMMAND = 2,
-}
-
+--This is being replaced entirely bc I want to remove the bits regarding
+--hitbox v. speed comparisons and air unit footprint expansions.
+--Unfortunately, this doesn't seem to be called at all.
 local function PostProcessUnit(unit)
     if table.find(unit.Categories, "SUBCOMMANDER") then
         table.insert(unit.Categories, "SACU_BEHAVIOR")
@@ -46,7 +15,8 @@ local function PostProcessUnit(unit)
             unit.CategoriesHash[category] = true 
         end
     end
-
+	unit.CategoriesHash[unit.BlueprintId] = true--This dipshit is holding the entire mod together now.
+--[[
     -- # create hash tables for quick lookup
     unit.DoNotCollideListCount = 0 
     unit.DoNotCollideListHash = { }
@@ -55,17 +25,7 @@ local function PostProcessUnit(unit)
         for k, category in unit.DoNotCollideList do 
             unit.DoNotCollideListHash[category] = true 
         end
-    end
-
-    -- # sanitize guard scan radius
-
-    -- The guard scan radius is used when:
-    -- - A unit attack moves, it determines how far the unit remains from its target
-    -- - A unit patrols, it determines when the unit decides to engage
-
-    -- All of the decisions below are made based on when a unit attack moves, as that is
-    -- the default meta to use in competitive play. This is by all means not perfect,
-    -- but it is the best we can do when we need to consider the performance of it all
+    end]]
 
     local isEngineer = unit.CategoriesHash['ENGINEER']
     local isStructure = unit.CategoriesHash['STRUCTURE']
@@ -75,7 +35,6 @@ local function PostProcessUnit(unit)
     local isBomber = unit.CategoriesHash['BOMBER']
     local isGunship = unit.CategoriesHash['GUNSHIP']
     local isTransport = unit.CategoriesHash['TRANSPORTATION']
-
     local isTech1 = unit.CategoriesHash['TECH1']
     local isTech2 = unit.CategoriesHash['TECH2']
     local isTech3 = unit.CategoriesHash['TECH3']
@@ -98,14 +57,7 @@ local function PostProcessUnit(unit)
             else -- mobile units do need this value set
                 -- check if we have a primary weapon that is actually a weapon
                 local primaryWeapon = unit.Weapon[1]
-                if primaryWeapon and not 
-                    (
-                        primaryWeapon.DummyWeapon or 
-                        primaryWeapon.WeaponCategory == 'Death' or
-                        primaryWeapon.Label == 'DeathImpact' or
-                        primaryWeapon.DisplayName == 'Air Crash'
-                    )
-                then 
+                if primaryWeapon and not (primaryWeapon.DummyWeapon or primaryWeapon.WeaponCategory == 'Death' or primaryWeapon.Label == 'DeathImpact' or primaryWeapon.DisplayName == 'Air Crash' ) then 
                     local isAntiAir = primaryWeapon.RangeCategory == 'UWRC_AntiAir'
                     local maxRadius = primaryWeapon.MaxRadius or 0
                     -- land to air units shouldn't get triggered too fast
@@ -114,13 +66,10 @@ local function PostProcessUnit(unit)
                     else	-- all other units will have the default value of 10% on top of their maximum attack radius
                         unit.AI.GuardScanRadius = 1.10 * maxRadius
                     end
-
                 -- units with no weaponry don't need this value set
                 else 
                     unit.AI.GuardScanRadius = 0
                 end
-
-
                 -- cap it, some units have extreme values based on their attack radius
                 if isTech1 and unit.AI.GuardScanRadius > 40 then 
                     unit.AI.GuardScanRadius = 40 
@@ -131,24 +80,20 @@ local function PostProcessUnit(unit)
                 elseif isExperimental and unit.AI.GuardScanRadius > 160 then 
                     unit.AI.GuardScanRadius = 160
                 end
-
                 -- sanitize it
                 unit.AI.GuardScanRadius = math.floor(unit.AI.GuardScanRadius)
             end
         end
     end
-
-    -- # sanitize air unit footprints (purged out of existence :] )
-
+	--------------------------------------------------------------------------------------
+	--This is where the air footprint sanitizing would be, but I'm not about that.
+	--------------------------------------------------------------------------------------
     -- # Allow naval factories to correct their roll off points, as they are critical for ships not being stuck
-
     if unit.CategoriesHash['FACTORY'] and unit.CategoriesHash['NAVAL'] then 
         unit.Physics.CorrectNavalRollOffPoints = true
     end
-
-    -- # Check size of collision boxes (Also purged out of existence :] )
+	--This is where the unit's speed v. hitbox size correction would be, but it prevents me from setting realistic hitboxes on stuff.
     -- # Fix being able to check for command caps
-
     local unitGeneral = unit.General
     if unitGeneral then
         local commandCaps = unitGeneral.CommandCaps
@@ -160,8 +105,6 @@ local function PostProcessUnit(unit)
     else
         unit.General = {CommandCapsHash = {}}
     end
-
-
     -- Pre-compute various elements
     unit.SizeVolume = (unit.SizeX or 1) * (unit.SizeY or 1) * (unit.SizeZ or 1)
     unit.SizeDamageEffects = 1
@@ -174,21 +117,16 @@ local function PostProcessUnit(unit)
             unit.SizeDamageEffectsScale = 2.0
         end
     end
-
     unit.Footprint = unit.Footprint or {}
     unit.Footprint.SizeMax = math.max(unit.Footprint.SizeX or 1, unit.Footprint.SizeZ or 1)
-
     -- Pre-compute intel state
-
     -- gather data
     local economyBlueprint = unit.Economy
     local intelBlueprint = unit.Intel
     local enhancementBlueprints = unit.Enhancements
     if intelBlueprint or enhancementBlueprints then
-
         ---@type UnitIntelStatus
         local status = {}
-
         -- life is good, intel is funded by the government
         local allIntelIsFree = false
         if intelBlueprint.FreeIntel or (
@@ -202,7 +140,6 @@ local function PostProcessUnit(unit)
             allIntelIsFree = true
             status.AllIntelMaintenanceFree = {}
         end
-
         -- special case: unit has intel that is considered free
         if intelBlueprint.ActiveIntel then
             status.AllIntelMaintenanceFree = status.AllIntelMaintenanceFree or {}
@@ -210,16 +147,13 @@ local function PostProcessUnit(unit)
                 status.AllIntelMaintenanceFree[intel] = true
             end
         end
-
         -- special case: unit has enhancements and therefore can have any intel type
         if enhancementBlueprints then
             status.AllIntelFromEnhancements = {}
         end
-
         -- usual case: find all remaining intel
         status.AllIntel = {}
         for name, value in intelBlueprint do
-
             if value == true or value > 0 then
                 local intel = BlueprintNameToIntel[name]
                 if intel then
@@ -231,7 +165,6 @@ local function PostProcessUnit(unit)
                 end
             end
         end
-
         -- check if we have any intel
         if not (table.empty(status.AllIntel) and table.empty(status.AllIntelMaintenanceFree) and not enhancementBlueprints) then
             -- cache it
@@ -241,7 +174,6 @@ local function PostProcessUnit(unit)
             unit.Intel.State = status
         end
     end
-
     -- Pre-compute use of veterancy
     if (not unit.Weapon[1]) or unit.General.ExcludeFromVeterancy then
         unit.VetEnabled = false
@@ -252,11 +184,7 @@ local function PostProcessUnit(unit)
             end
         end
     end
-
-    unit.VetThresholds = {
-        0, 0, 0, 0, 0
-    }
-
+    unit.VetThresholds = { 0, 0, 0, 0, 0 }
     if unit.VeteranMass then
         unit.VetThresholds[1] = unit.VeteranMass[1]
         unit.VetThresholds[2] = unit.VeteranMass[2] + unit.VetThresholds[1]
@@ -271,11 +199,102 @@ local function PostProcessUnit(unit)
         unit.VetThresholds[4] = 4 * multiplier * (unit.Economy.BuildCostMass or 1)
         unit.VetThresholds[5] = 5 * multiplier * (unit.Economy.BuildCostMass or 1)
     end
-end
+    -- Pre-compute weak secondary weapons and weapon overlays
+    local weapons = unit.Weapon
+    if weapons then
+        -- determine total dps per category
+        local damagePerRangeCategory = {
+            DIRECTFIRE = 0,
+            INDIRECTFIRE = 0,
+            ANTIAIR = 0,
+            ANTINAVY = 0,
+            COUNTERMEASURE = 0,
+        }
+        for k, weapon in weapons do
+            local dps = DetermineWeaponDPS(weapon)
+            local category = DetermineWeaponCategory(weapon)
+            if category then
+                damagePerRangeCategory[category] = damagePerRangeCategory[category] + dps
+            else
+                if weapon.WeaponCategory != 'Death' then
+                    -- WARN("Invalid weapon on " .. unit.BlueprintId)
+                end
+            end
+        end
+        local array = {
+            {
+                RangeCategory = "DIRECTFIRE",
+                Damage = damagePerRangeCategory["DIRECTFIRE"]
+            },
+            {
+                RangeCategory = "INDIRECTFIRE",
+                Damage = damagePerRangeCategory["INDIRECTFIRE"]
+            },
+            {
+                RangeCategory = "ANTIAIR",
+                Damage = damagePerRangeCategory["ANTIAIR"]
+            },
+            {
+                RangeCategory = "ANTINAVY",
+                Damage = damagePerRangeCategory["ANTINAVY"]
+            },
+            {
+                RangeCategory = "COUNTERMEASURE",
+                Damage = damagePerRangeCategory["COUNTERMEASURE"]
+            }
+        }
+        table.sort(array, function(e1, e2) return e1.Damage > e2.Damage end)
+        local factor = array[1].Damage
+        for category, damage in damagePerRangeCategory do
+            if damage > 0 then
+                local cat = "OVERLAY" .. category
+                if not unit.CategoriesHash[cat] then
+                    table.insert(unit.Categories, cat)
+                    unit.CategoriesHash[cat] = true
+                    unit.CategoriesCount = unit.CategoriesCount + 1
+                end
 
---- Post-processes all units
-function PostProcessUnits(units)
-    for k, unit in units do 
-        PostProcessUnit(unit)
+                local cat = "WEAK" .. category
+                if not (
+                        category == 'COUNTERMEASURE' or
+                        unit.CategoriesHash['COMMAND'] or
+                        unit.CategoriesHash['STRATEGIC'] or
+                        unit.CategoriesHash[cat]
+                    ) and damage < 0.2 * factor
+                then
+                    table.insert(unit.Categories, cat)
+                    unit.CategoriesHash[cat] = true
+                    unit.CategoriesCount = unit.CategoriesCount + 1
+                end
+            end
+        end
     end
+    -- add the defense overlay to shields
+    if unit.Defense.Shield and unit.Defense.Shield.ShieldSize > 0 then
+        local cat = "OVERLAYDEFENSE"
+        if not unit.CategoriesHash[cat] then
+            table.insert(unit.Categories, cat)
+            unit.CategoriesHash[cat] = true
+            unit.CategoriesCount = unit.CategoriesCount + 1
+        end
+    end
+    -- Populate help text field when applicable
+    if not (unit.Interface and unit.Interface.HelpText) then
+        unit.Interface = unit.Interface or { }
+        unit.Interface.HelpText = unit.Description or "" --[[@as string]]
+    end
+    ---------------------------------------------------------------------------
+    --#region (Re) apply the ability to land on water
+    -- there was a bug with Rover drones (from the kennel) when they interact
+    -- with naval factories. They would first move towards a 'free build 
+    -- location' when assisting a naval factory. As they can't land on water, 
+    -- that build location could be far away at the shore.
+    -- this doesn't fix the problem itself, but it does alleviate it. At least
+    -- the drones do not need to go to the shore anymore, they now look for
+    -- a 'free build location' near the naval factory on water
+    if isAir and (isTransport or isGunship or isPod) and (not isExperimental) then
+        table.insert(unit.Categories, "CANLANDONWATER")
+        unit.CategoriesHash["CANLANDONWATER"] = true
+    end
+    --#endregion
 end

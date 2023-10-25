@@ -157,9 +157,9 @@ NukeProjectile = Class(NullShell) {
     ForceThread = function(self)
         -- Knockdown force rings
         local position = self:GetPosition()
-        DamageRing(self, position, 0, 200, 40, 'Force', true)
+        DamageRing({ Unit = self.launcher, Proj = self }, position, 0, 200, 40, 'Force', true)
         WaitSeconds(0.1)
-        DamageRing(self, position, 0, 160, 100, 'Force', true)
+        DamageRing({ Unit = self.launcher, Proj = self }, position, 0, 160, 100, 'Force', true)
     end,
 
     OnImpact = function(self, TargetType, TargetEntity)

@@ -1,3 +1,68 @@
+local OldStruct = StructureUnit
+
+StructureUnit = ClassUnit(OldStruct) {
+    ---@param self StructureUnit
+    OnCreate = function(self)--Bc this makes changes to terrain already, I can't just hook the old one, I have to override it completely with my own version.
+        Unit.OnCreate(self)
+        self:HideLandBones()
+        self.FxBlinkingLightsBag = { }
+
+        local layer = self.Layer
+        local blueprint = self.Blueprint
+        local physicsBlueprint = blueprint.Physics
+        local flatten = physicsBlueprint.FlattenSkirt
+        local horizontalSkirt = physicsBlueprint.HorizontalSkirt
+        if flatten then
+            if horizontalSkirt then
+                self:FlattenSkirtHorizontally()
+            else
+                self:FlattenSkirt()
+            end
+        end
+		--and (flatten or physicsBlueprint.AlwaysAlignToTerrain) This is removed to let t1 pd/aa tilt, as well as any other small structure.
+            
+        -- check for terrain orientation  physicsBlueprint.AltitudeToTerrain or
+        if not (physicsBlueprint.StandUpright or horizontalSkirt) and (layer == 'Land' or layer == 'Seabed') then
+            -- rotate structure to match terrain gradient
+            local a1, a2 = TerrainUtils.GetTerrainSlopeAnglesDegrees(
+                self:GetPosition(),
+                blueprint.Footprint.SizeX or physicsBlueprint.SkirtSizeX,
+                blueprint.Footprint.SizeZ or physicsBlueprint.SkirtSizeZ
+            )
+
+            -- do not orientate structures that are on flat ground
+            if a1 != 0 or a2 != 0 then
+                -- quaternion magic incoming, be prepared! Note that the yaw axis is inverted, but then
+                -- re-inverted again by multiplying it with the original orientation
+                local quatSlope = Quaternion.fromAngle(0, 0 - a2,-1 * a1)
+                local quatOrient = setmetatable(self:GetOrientation(), Quaternion)
+                local quat = quatOrient * quatSlope
+                self:SetOrientation(quat, true)
+
+                -- technically obsolete, but as this is part of an integration we don't want to break
+                -- the mod package that it originates from. Originates from the BrewLan mod suite
+                self.TerrainSlope = {}
+            end
+        end
+
+        -- create decal below structure
+        if --[[flatten and]] not self:HasTarmac() and blueprint.General.FactionName ~= "Seraphim" then
+            if self.TarmacBag then
+                self:CreateTarmac(true, true, true, self.TarmacBag.Orientation, self.TarmacBag.CurrentBP)
+            else
+                self:CreateTarmac(true, true, true, false, false)
+            end
+        end
+    end,
+}
+-- Concrete Structures| Unsure of what these were supposed to be for, But I might look into this.
+---@class ConcreteStructureUnit : StructureUnit
+ConcreteStructureUnit = ClassUnit(StructureUnit) {
+    ---@param self ConcreteStructureUnit
+    OnCreate = function(self)
+        StructureUnit.OnCreate(self)
+    end
+}
 --- Base class for command units.
 ---@class CommandUnit : WalkingLandUnit
 CommandUnit = Class(WalkingLandUnit) {
@@ -22,7 +87,7 @@ CommandUnit = Class(WalkingLandUnit) {
         --self:BuildManipulatorSetEnabled(false)
         self.BuildArmManipulator:SetPrecedence(0)
         self:SetWeaponEnabledByLabel(self.HeadLabel, true)
-        --self:GetWeaponManipulatorByLabel(self.HeadLabel):SetHeadingPitch(self.BuildArmManipulator:GetHeadingPitch())
+        self:GetWeaponManipulatorByLabel(self.HeadLabel):SetHeadingPitch(self.BuildArmManipulator:GetHeadingPitch())
         self:SetImmobile(false)
     end,
 
@@ -63,9 +128,9 @@ CommandUnit = Class(WalkingLandUnit) {
         if self:BeenDestroyed() then return end
 
         self:BuildManipulatorSetEnabled(true)
-        self.BuildArmManipulator:SetPrecedence(3)
+        self.BuildArmManipulator:SetPrecedence(13)
         self:SetWeaponEnabledByLabel(self.HeadLabel, false)
-        --self.BuildArmManipulator:SetHeadingPitch(self:GetWeaponManipulatorByLabel(self.HeadLabel):GetHeadingPitch())
+        self.BuildArmManipulator:SetHeadingPitch(self:GetWeaponManipulatorByLabel(self.HeadLabel):GetHeadingPitch())
 
         -- This is an extremely ugly hack to get around an engine bug. If you have used a command such as OC or repair on an illegal
         -- target (An allied unit, or something at full HP, for example) while moving, the engine is tricked into a state where
@@ -331,15 +396,11 @@ ACUUnit = Class(CommandUnit) {
         self.WeaponEnabled = {}
     end,
 
-    ---@param self ACUUnit
-    ---@param instigator Unit
-    ---@param amount number
-    ---@param vector Vector
-    ---@param damageType string
+    ---@param instigator Can be a Unit or table, purely to support the advanced hitboxes.
     DoTakeDamage = function(self, instigator, amount, vector, damageType)
         -- Handle incoming OC damage
         if damageType == 'Overcharge' then
-            local wep = instigator:GetWeaponByLabel('OverCharge')
+            local wep = (instigator.Unit or instigator):GetWeaponByLabel('OverCharge')
             amount = wep.Blueprint.Overcharge.commandDamage
         end
 
@@ -354,16 +415,19 @@ ACUUnit = Class(CommandUnit) {
         end
     end,
 
-    ---@param self ACUUnit
-    ---@param instigator Unit
-    ---@param type string
-    ---@param overkillRatio number
+    ---@param instigator Can be a Unit or table, purely to support the advanced hitboxes.
     OnKilled = function(self, instigator, type, overkillRatio)
         CommandUnit.OnKilled(self, instigator, type, overkillRatio)
-
+		--[[LOG('{ Instigator unit field:')
+		LOG(instigator.Unit)
+		LOG('}')]]
+		LOG('{ Death Call instigator:')
+		LOG(reprsl(instigator))
+		LOG('}')
+		local instie = instigator.Unit or instigator
         -- If there is a killer, and it's not me
-        if instigator and instigator.Army ~= self.Army then
-            local instigatorBrain = ArmyBrains[instigator.Army]
+        if instie.Army ~= self.Army then
+            local instigatorBrain = ArmyBrains[instie.Army]
 
             Sync.EnforceRating = true
             WARN('ACU kill detected. Rating for ranked games is now enforced.')
@@ -373,12 +437,12 @@ ACUUnit = Class(CommandUnit) {
             --     'DeathExplosion' - when normal unit is killed
             --     'Nuke' - when Paragon is killed
             --     'Deathnuke' - when ACU is killed
-            if IsAlly(self.Army, instigator.Army) and not ((type == 'DeathExplosion' or type == 'Nuke' or type == 'Deathnuke') and not instigator.SelfDestructed) then
+            if IsAlly(self.Army, instie.Army) and not (type == 'DeathExplosion' or type == 'Nuke' or type == 'Deathnuke') and not instie.SelfDestructed then
                 WARN('Teamkill detected')
-                Sync.Teamkill = {killTime = GetGameTimeSeconds(), instigator = instigator.Army, victim = self.Army}
+                Sync.Teamkill = {killTime = GetGameTimeSeconds(), instigator = instie.Army, victim = self.Army}
             end
         end
-        ArmyBrains[self.Army].CommanderKilledBy = (instigator or self).Army
+        ArmyBrains[self.Army].CommanderKilledBy = (instie or self).Army
     end,
 
     ---@param self ACUUnit
@@ -407,16 +471,16 @@ ACUUnit = Class(CommandUnit) {
 
     ---@param self ACUUnit
     BuildDisable = function(self)
-        while self:IsUnitState('Building') or self:IsUnitState('Enhancing') or self:IsUnitState('Upgrading') or
+        --[[while self:IsUnitState('Building') or self:IsUnitState('Enhancing') or self:IsUnitState('Upgrading') or
                 self:IsUnitState('Repairing') or self:IsUnitState('Reclaiming') do
             WaitSeconds(0.5)
         end
-
+		
         for label, enabled in self.WeaponEnabled do
             if enabled then
                 self:SetWeaponEnabledByLabel(label, true, true)
             end
-        end
+        end]]
     end,
 
     -- Store weapon status on upgrade. Ignore default and OC, which are dealt with elsewhere
@@ -441,16 +505,16 @@ ACUUnit = Class(CommandUnit) {
         CommandUnit.OnStartBuild(self, unitBeingBuilt, order)
 
         --Disable any active upgrade weapons
-        local fork = false--[[ 
+        --[[ local fork = false
         for label, enabled in self.WeaponEnabled do
             if enabled then
                 self:SetWeaponEnabledByLabel(label, false, true)
                 fork = true
             end
-        end,--]]
-
+        end,
+		
         if fork then
             self:ForkThread(self.BuildDisable)
-        end
+        end]]
     end
 }

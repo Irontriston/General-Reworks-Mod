@@ -1,0 +1,2 @@
+objectiveDecal = '/mods/GeneralReworks/hook/env/utility/decals/objective_debug_albedo.dds'
+--This just changes the decal path to the mod's replacement. Bc it's altering an existing variable, there's no need to start with 'local '.
