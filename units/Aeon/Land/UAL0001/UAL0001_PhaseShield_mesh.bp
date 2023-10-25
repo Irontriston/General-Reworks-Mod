@@ -1,0 +1,15 @@
+MeshBlueprint {
+    IconFadeInZoom = 130,
+    LODs = {
+        {
+            MeshName = '/mods/GeneralReworks/units/Aeon/Land/ual0001/ual0001_lod0.scm',
+            AlbedoName = '/mods/GeneralReworks/units/Aeon/Land/ual0001/ual0001_albedo.dds',
+            NormalsName = '/mods/GeneralReworks/units/Aeon/Land/ual0001/ual0001_normals.dds',
+            SpecularName = '/mods/GeneralReworks/units/Aeon/Land/ual0001/ual0001_specteam.dds',
+            LookupName = '/effects/entities/PhaseShield/PhaseShieldLookup.dds',
+			Scrolling = true,
+            ShaderName = 'AeonPhaseShield',
+            LODCutoff = 195,
+        },
+    },
+}
