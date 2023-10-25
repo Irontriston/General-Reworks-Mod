@@ -20,12 +20,12 @@ ProjectileBlueprint {
         'UEF',
         'PROJECTILE',
         'ANTIAIR',
-        'MISSILE',
+        'MISSILE'
     },
     Display = {
         MeshBlueprint = '/projectiles/TANAnglerTorpedo01/TANAnglerTorpedo01_mesh.bp',
-        StrategicIconSize = 2,
-        UniformScale = 0.07,
+        StrategicIconSize = 1,
+        UniformScale = 0.05,
     },
     General = {
         Category = 'Anti Air',
@@ -45,7 +45,7 @@ ProjectileBlueprint {
         MaxSpeed = 165,
         OnLostTargetLifetime = 0.7,
         TrackTarget = true,
-		SearchRadius = 13,
+		SearchRadius = 21,
 		SearchCategories = 'ALLUNITS',
 		SearchLayers = { 'Air', 'Land', 'Water' },
         TurnRate = 480,

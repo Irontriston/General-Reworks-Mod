@@ -31,7 +31,7 @@ ProjectileBlueprint {
             },
         },
         StrategicIconSize = 2,
-        UniformScale = 0.03,
+        UniformScale = 0.04,
     },
     General = {
         Category = 'Anti Air',
@@ -51,7 +51,7 @@ ProjectileBlueprint {
         MaxSpeed = 180,
         OnLostTargetLifetime = 0.7,
         TrackTarget = true,
-		SearchRadius = 15,
+		SearchRadius = 23,
 		SearchCategories = 'AIR',
 		SearchLayers = { 'Air', 'Land', 'Water'},
         TurnRate = 480,

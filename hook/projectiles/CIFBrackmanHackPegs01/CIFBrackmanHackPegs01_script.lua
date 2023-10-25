@@ -33,7 +33,7 @@ CIFBrackmanHackPegs01 = Class(CDFBrackmanHackPegProjectile01) {
         local angleInitial = RandomFloat( 0, angle )
         -- Randomization of the spread
         local angleVariation = 0.0 -- Adjusts angle variance spread
-        local spreadMul = 0.75 -- Adjusts the width of the dispersal
+        local spreadMul = 0.9 -- Adjusts the width of the dispersal
 		
 		local orient = self:GetOrientation()
 		
@@ -41,15 +41,16 @@ CIFBrackmanHackPegs01 = Class(CDFBrackmanHackPegProjectile01) {
         local zVec = 0
 		local yVec = 0
         -- Launch projectiles at semi-random angles away from split location
-        for i = 0, (numProjectiles -1) do
+        for i = 1, numProjectiles do
             xVec = vx + (math.sin(angleInitial + (i*angle) + RandomFloat(-angleVariation, angleVariation))) * spreadMul
             zVec = vz + (math.cos(angleInitial + (i*angle) + RandomFloat(-angleVariation, angleVariation))) * spreadMul 
-			yVec = -math.sqrt(1-xVec*xVec -zVec*zVec)
-            local proj = self:CreateProjectile(ChildProjectileBP,  0, 0, 0, zVec, 0, xVec):SetCollision(true):SetVelocity(velocity)
+			
+            local proj = self:CreateProjectile(ChildProjectileBP,  0, 0, 0, xVec, vy, zVec):SetCollision(true):SetVelocity(velocity)--SetTargetPosition is unique to 02
             proj:PassDamageData(self.DamageData)
             proj:SetTargetPosition(self:GetCurrentTargetPosition())                    
         end
-        
+		local x, y, z = unpack(self:GetCurrentTargetPosition() )
+		VizMarker( {X = x, Z = z, LifeTime = 15, Radius = 10, Vision = true, WaterVision = true, Army = self.Army} )
         self:Destroy()
     end,
 }

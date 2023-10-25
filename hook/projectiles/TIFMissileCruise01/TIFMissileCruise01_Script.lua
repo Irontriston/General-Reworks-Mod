@@ -41,21 +41,20 @@ TIFMissileCruise01 = Class(TMissileCruiseProjectile) {
     SetTurnRateByDist = function(self)
         local dist = self:GetDistanceToTarget()
         #Get the nuke as close to 90 deg as possible
-        if dist > 50 then        
+        if dist > 180 then        
             #Freeze the turn rate as to prevent steep angles at long distance targets
-            WaitSeconds(2)
+            WaitSeconds(1)
             self:SetTurnRate(20)
-        elseif dist > 128 and dist <= 213 then
-						# Increase check intervals
-						self:SetTurnRate(30)
-						WaitSeconds(1.5)
+        elseif dist > 140 and dist <= 180 then
+			# Increase check intervals
+			WaitSeconds(0.4)
             self:SetTurnRate(30)
-        elseif dist > 43 and dist <= 107 then
-						# Further increase check intervals
-            WaitSeconds(0.3)
+        elseif dist > 60 and dist <= 140 then
+			# Further increase check intervals
+            WaitSeconds(0.1)
             self:SetTurnRate(50)
-				elseif dist > 0 and dist <= 43 then
-						# Further increase check intervals            
+		elseif dist > 0 and dist <= 60 then
+			# Kills the thread with the maximum turn rate.    
             self:SetTurnRate(100)   
             KillThread(self.MoveThread)         
         end
