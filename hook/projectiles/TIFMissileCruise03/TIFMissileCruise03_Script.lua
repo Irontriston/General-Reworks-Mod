@@ -42,28 +42,27 @@ TIFMissileCruise03 = Class(TMissileCruiseProjectile) {
     SetTurnRateByDist = function(self)
         local dist = self:GetDistanceToTarget()
         if dist > self.Distance then
-        	self:SetTurnRate(75)
-        	WaitSeconds(3)
-        	self:SetTurnRate(8)
+        	self:SetTurnRate(65)
+        	WaitSeconds(1)
+        	self:SetTurnRate(0)
         	self.Distance = self:GetDistanceToTarget()
         end
         #Get the nuke as close to 90 deg as possible
-        if dist > 50 then        
+        if dist > 150 then        
             #Freeze the turn rate as to prevent steep angles at long distance targets
-            WaitSeconds(2)
-            self:SetTurnRate(10)
-        elseif dist > 30 and dist <= 50 then
-						# Increase check intervals
-						self:SetTurnRate(12)
-						WaitSeconds(1.5)
-            self:SetTurnRate(12)
-        elseif dist > 10 and dist <= 25 then
-						# Further increase check intervals
-            WaitSeconds(0.3)
-            self:SetTurnRate(50)
-				elseif dist > 0 and dist <= 10 then
-						# Further increase check intervals            
-            self:SetTurnRate(100)   
+            WaitSeconds(0.5)
+            self:SetTurnRate(5)
+        elseif dist > 100 and dist <= 150 then
+			# Increase check intervals
+			WaitSeconds(0.2)
+            self:SetTurnRate(15)
+        elseif dist > 40 and dist <= 100 then
+			# Further increase check intervals
+            WaitSeconds(0.1)
+            self:SetTurnRate(45)
+		elseif dist > 0 and dist <= 40 then
+			# Kills the thread with the maximum turn rate.
+            self:SetTurnRate(135)
             KillThread(self.MoveThread)         
         end
     end,        
@@ -74,11 +73,11 @@ TIFMissileCruise03 = Class(TMissileCruiseProjectile) {
         local dist = VDist2(mpos[1], mpos[3], tpos[1], tpos[3])
         return dist
     end,
-        
+        --[[Wtf is this here for?
     OnImpact = function(self, targetType, targetEntity)
         local army = self:GetArmy()
         SingleBeamProjectile.OnImpact(self, targetType, targetEntity)
-    end,
+    end,]]
 }
 TypeClass = TIFMissileCruise03
 
