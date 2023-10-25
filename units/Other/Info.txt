@@ -1,0 +1,1 @@
+This holds units that are either shared with multiple factions, like the Loyalist prison or Quantum Jammer, or units that technically can't be 'owned' by any faction, like Dostya or Arnold's ruins.
