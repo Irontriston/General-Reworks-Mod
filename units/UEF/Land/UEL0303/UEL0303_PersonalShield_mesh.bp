@@ -1,0 +1,14 @@
+MeshBlueprint {
+    IconFadeInZoom = 130,
+    LODs = {
+        {
+            MeshName = '/mods/GeneralReworks/units/UEF/Land/UEL0303/UEL0303_lod0.scm',
+            AlbedoName = '/mods/GeneralReworks/units/UEF/Land/UEL0303/UEL0303_albedo.dds',
+            NormalsName = '/mods/GeneralReworks/units/UEF/Land/UEL0303/UEL0303_normalsTS.dds',
+            SpecularName = '/mods/GeneralReworks/units/UEF/Land/UEL0303/UEL0303_SpecTeam.dds',
+            LookupName = '/effects/entities/PhaseShield/PhaseShieldLookup.dds',
+            ShaderName = 'PhaseShield',
+            LODCutoff = 195,
+        },
+    },
+}
