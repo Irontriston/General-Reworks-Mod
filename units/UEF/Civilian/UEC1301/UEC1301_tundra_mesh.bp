@@ -1,0 +1,13 @@
+MeshBlueprint {
+    IconFadeInZoom = 130,
+    LODs = {
+        {
+            MeshName = '/mods/GeneralReworks/units/UEFuec1301/uec1301_lod0.scm',
+            AlbedoName = '/mods/GeneralReworks/units/UEF/Civilian/uec1301_Tundra/uec1301_Tundra_lod1_albedo.dds',
+            NormalsName = '/mods/GeneralReworks/units/UEFuec1301_Tundra/uec1301_Tundra_normalsTS.dds',
+            SpecularName = '/mods/GeneralReworks/units/UEF/Civilian/uec1301_Tundra/uec1301_Tundra_lod1_specteam.dds',
+            Shader = 'TMeshAlpha',
+            LODCutoff = 195,
+        },
+    },
+}
