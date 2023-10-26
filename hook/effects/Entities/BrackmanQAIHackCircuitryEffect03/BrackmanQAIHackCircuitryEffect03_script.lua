@@ -10,7 +10,7 @@
 --****************************************************************************
 local EffectTemplate = import("/lua/effecttemplates.lua")
 local EmitterProjectile = import("/lua/sim/defaultprojectiles.lua").EmitterProjectile
-local ProjCode = import("/mods/GeneralReworks/hook/effects/Entities/ProjCaptureCode.lua")
+local ProjCode = import("/mods/GeneralReworks/new lua/ProjCaptureCode.lua")
 
 BrackmanQAIHackCircuitryEffect03 = Class(EmitterProjectile) {
 	FxImpactTrajectoryAligned = true,
