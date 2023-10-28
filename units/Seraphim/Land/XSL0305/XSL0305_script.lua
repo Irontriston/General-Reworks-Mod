@@ -6,7 +6,7 @@
 --
 --  Copyright © 2007 Gas Powered Games, Inc.  All rights reserved.
 --**************************************************************************
-local SLandUnit = import('/lua/seraphimunits.lua').SLandUnit
+local SHoverUnit = import('/lua/seraphimunits.lua').SHoverLandUnit
 local SeraphimWeapons = import('/lua/seraphimweapons.lua')
 local EffectUtil = import('/lua/EffectUtilities.lua')  #added for effects
 
@@ -14,7 +14,7 @@ local SDFSihEnergyRifleNormalMode = SeraphimWeapons.SDFSniperShotNormalMode
 local SDFSihEnergyRifleSniperMode = SeraphimWeapons.SDFSniperShotSniperMode
 
 
-XSL0305 = Class(SLandUnit) {
+XSL0305 = Class(SHoverUnit) {
 
     Weapons = {
         MainGun = Class(SDFSihEnergyRifleNormalMode) {},
@@ -27,7 +27,7 @@ XSL0305 = Class(SLandUnit) {
     },
 
     OnCreate = function(self)
-        SLandUnit.OnCreate(self)
+        SHoverUnit.OnCreate(self)
         self:SetWeaponEnabledByLabel('SniperGun', false)
         
         local wepBp = self:GetBlueprint().Weapon
@@ -43,7 +43,7 @@ XSL0305 = Class(SLandUnit) {
     end,
 
     OnScriptBitSet = function(self, bit)
-        SLandUnit.OnScriptBitSet(self, bit)
+        SHoverUnit.OnScriptBitSet(self, bit)
         if bit == 1 then
             local bp = self:GetBlueprint()
             self:SetSpeedMult(bp.Physics.LandSpeedMultiplier * 0.75)
@@ -65,7 +65,7 @@ XSL0305 = Class(SLandUnit) {
     end,
 
     OnScriptBitClear = function(self, bit)
-        SLandUnit.OnScriptBitClear(self, bit)
+        SHoverUnit.OnScriptBitClear(self, bit)
         if bit == 1 then
             -- Reset movement speed
             local bp = self:GetBlueprint()

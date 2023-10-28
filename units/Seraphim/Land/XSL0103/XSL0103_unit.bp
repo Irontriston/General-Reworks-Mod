@@ -69,52 +69,6 @@ UnitBlueprint {
         Abilities = {
             '<LOC ability_hover>Hover',
         },
-        IdleEffects = {
-            Land = {
-                Effects = {
-                    {
-                        Bones = {
-                            'XSL0103',
-                        },
-                        Offset = {
-                            0.2,
-                            -0.15,
-                            -0.1,
-                        },
-                        Scale = 0.6,
-                        Type = 'SeraphimGroundFX01',
-                    },
-                },
-            },
-            Water = {
-                Effects = {
-                    {
-                        Bones = {
-                            'XSL0103',
-                        },
-                        Offset = {
-                            0.2,
-                            -0.15,
-                            -0.1,
-                        },
-                        Scale = 0.6,
-                        Type = 'SeraphimGroundFX01',
-                    },
-                    {
-                        Bones = {
-                            'XSL0103',
-                        },
-                        Offset = {
-                            0.2,
-                            -0.15,
-                            -0.1,
-                        },
-                        Scale = 1.2,
-                        Type = 'SeaIdle02',
-                    },
-                },
-            },
-        },
         Mesh = {
             IconFadeInZoom = 130,
             LODs = {
@@ -130,59 +84,6 @@ UnitBlueprint {
                     LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
                     ShaderName = 'Seraphim',
                     SpecularName = 'xsl0103_lod1_specteam.dds',
-                },
-            },
-        },
-        MovementEffects = {
-            Land = {
-                Effects = {
-                    {
-                        Bones = {
-                            'XSL0103',
-                        },
-                        Scale = 0.6,
-                        Type = 'GroundKickup01',
-                    },
-                    {
-                        Bones = {
-                            'XSL0103',
-                        },
-                        Offset = {
-                            0.2,
-                            -0.15,
-                            -0.1,
-                        },
-                        Scale = 0.6,
-                        Type = 'SeraphimGroundFX01',
-                    },
-                },
-            },
-            Water = {
-                Effects = {
-                    {
-                        Bones = {
-                            'XSL0103',
-                        },
-                        Offset = {
-                            0.2,
-                            -0.15,
-                            -0.1,
-                        },
-                        Scale = 0.5,
-                        Type = 'BackWake',
-                    },
-                    {
-                        Bones = {
-                            'XSL0103',
-                        },
-                        Offset = {
-                            0.2,
-                            -0.15,
-                            -0.1,
-                        },
-                        Scale = 0.6,
-                        Type = 'SeraphimGroundFX01',
-                    },
                 },
             },
         },

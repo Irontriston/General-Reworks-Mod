@@ -49,9 +49,8 @@ UnitBlueprint {
         'SNIPER',
         'VISIBLETORECON',
         'RECLAIMABLE',
-        'BOT',
+		'HOVER',
         'OVERLAYDIRECTFIRE',
-        'DUMMYGSRWEAPON',
         'SNIPEMODE',
     },
     Defense = {
@@ -104,13 +103,6 @@ UnitBlueprint {
                         Scale = 1,
                         Type = 'SeraphimGroundFX02',
                     },
-                    {
-                        Bones = {
-                            'XSL0305',
-                        },
-                        Scale = 1,
-                        Type = 'SeaIdle02',
-                    },
                 },
             },
         },
@@ -151,13 +143,6 @@ UnitBlueprint {
                         },
                         Scale = 1,
                         Type = 'SeraphimGroundFX02',
-                    },
-                    {
-                        Bones = {
-                            'XSL0305',
-                        },
-                        Scale = 1,
-                        Type = 'SeaIdle02',
                     },
                 },
             },
@@ -227,6 +212,7 @@ UnitBlueprint {
         },
         DragCoefficient = 0.2,
         LandSpeedMultiplier = 1,
+        Elevation = 1,
         MaxAcceleration = 2.4,
         MaxBrake = 2.4,
         MaxSpeed = 2.4,
@@ -236,10 +222,15 @@ UnitBlueprint {
         MeshExtentsY = 1.25,
         MeshExtentsZ = 1,
         MinSpeedPercent = 0,
-        MotionType = 'RULEUMT_Land',
+        MotionType = 'RULEUMT_Hover',
         StandUpright = true,
+        RotateBodyWhileMoving = true,
+        RotateOnSpot = true,
+		TurnFacingRate = 75,
         TurnRadius = 5,
         TurnRate = 90,
+        WobbleFactor = 0,
+        WobbleSpeed = 0,
     },
     SelectionSizeX = 0.4,
     SelectionSizeZ = 0.5,
@@ -262,7 +253,7 @@ UnitBlueprint {
         Level4 = 48,
         Level5 = 60,
     },
-    Weapon = {
+    Weapon = {--[[ I do not believe this dummy weapon is needed...
         { -- special dummy weapon to make the unit stop a certain distance away
             Damage = 0,
             DamageFriendly = false,
@@ -299,7 +290,7 @@ UnitBlueprint {
             TurretYawSpeed = 90,
             Turreted = true,
             SlavedToBody = false,
-        },
+        },]]
         {
             AboveWaterTargetsOnly = true,
             Audio = {
@@ -375,7 +366,7 @@ UnitBlueprint {
             TurretPitchSpeed = 30,
             TurretYaw = 0,
             TurretYawRange = 180,
-            TurretYawSpeed = 70,
+            TurretYawSpeed = 60,
             Turreted = true,
             WeaponCategory = 'Direct Fire',
             WeaponRepackTimeout = 0,
